@@ -3,12 +3,16 @@ package com.example.demo.controller;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.example.demo.entities.Lead;
+import com.example.demo.entities.LeadRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,6 +25,9 @@ public class DemoHelp {
 
 	private static final ObjectMapper mapper = new ObjectMapper();
 	private static int inc = 0;
+	
+	@Autowired
+	LeadRepository repository;
 
 	public JsonNode readInput() {
 
@@ -66,6 +73,30 @@ public class DemoHelp {
           return true;
 		}
 		return false;
+	}
+	
+	public boolean isCorrectData(ObjectNode body) {
+		List<Lead> leads = repository.findAll();
+		
+		if(body.get("mobile").asText().length() != 10) {
+			return false;
+		}
+		
+		for (Lead lead : leads) {
+			if(lead.getEmail().equals( body.get("email").asText()) || lead.getMobile().equals(body.get("mobile").asText()) ) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public boolean isNumeric(String str) {
+		try {
+			Integer.parseInt(str);
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
 	}
 
 }
