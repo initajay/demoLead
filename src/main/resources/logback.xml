@@ -1,0 +1,102 @@
+<!--
+  this file is packaged with the Spring Boot single executable built restmon jar
+  you can override this default file with an external file by launching restmon with -Dlogback.configurationFile -Dlogging.config=file:./logback.xml
+  Example:
+    C:\apps\RESTmonElasticsearch>java -Dlogback.configurationFile=file:./logback.xml -Dlogging.config=file:./logback.xml -jar lib\restmon-1.0.0-SNAPSHOT.jar
+-->
+<configuration>
+	
+  <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d [%thread] %-5level %logger{0}:%line - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+ <property name="LOG_PATH" value="${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}" />
+ 
+  <appender name="rolling" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${LOG_PATH:-.}/demo.log</file>
+    <append>false</append>                                                      
+    <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+      <fileNamePattern>logs/demo.%i.log.zip</fileNamePattern>
+      <minIndex>1</minIndex>
+      <maxIndex>10</maxIndex>
+    </rollingPolicy>
+    <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+      <maxFileSize>50MB</maxFileSize>
+    </triggeringPolicy>
+    <encoder>
+      <pattern>%d [%thread] %-5level %logger{0}:%line - %msg%n</pattern>
+    </encoder>
+  </appender>
+
+  <root level="INFO">
+    <appender-ref ref="console"/>
+    <appender-ref ref="rolling"/>
+  </root>
+  
+  <!-- Uncomment for only NASS related debug logs  
+  <logger name="com.ca.im.nass.client" level="DEBUG" additivity="false">
+    <appender-ref ref="console"/>
+    <appender-ref ref="rolling"/>
+  </logger>
+  -->
+  
+  <logger name="com.jayway.jsonpath" level="ERROR" additivity="false">
+    <appender-ref ref="console"/>
+    <appender-ref ref="rolling"/>
+  </logger>
+
+  <logger name="h2database" level="ERROR" additivity="false">
+    <appender-ref ref="console"/>
+    <appender-ref ref="rolling"/>
+  </logger>
+
+  <logger name="org.apache.http" level="OFF" additivity="false">
+    <appender-ref ref="console"/>
+    <appender-ref ref="rolling"/>
+  </logger>
+
+  <logger name="org.springframework" level="ERROR" additivity="false">
+    <appender-ref ref="console"/>
+    <appender-ref ref="rolling"/>
+  </logger>
+
+  <logger name="com.ulisesbocchio" level="ERROR" additivity="false">
+    <appender-ref ref="console"/>
+    <appender-ref ref="rolling"/>
+  </logger>
+
+	<!-- Uncomment this if you want to only change Flink's logging -->
+    <logger name="org.apache.flink" level="ERROR">
+        <appender-ref ref="console"/>
+        <appender-ref ref="rolling"/>
+    </logger>
+
+    <!-- The following lines keep the log level of common libraries/connectors on
+         log level INFO. The root logger does not override this. You have to manually
+         change the log levels here. -->
+    <logger name="akka" level="ERROR">
+        <appender-ref ref="console"/>
+        <appender-ref ref="rolling"/>
+    </logger>
+    <logger name="org.apache.kafka" level="ERROR">
+        <appender-ref ref="console"/>
+        <appender-ref ref="rolling"/>
+    </logger>
+    <logger name="org.apache.hadoop" level="ERROR">
+        <appender-ref ref="console"/>
+        <appender-ref ref="rolling"/>
+    </logger>
+    <logger name="org.apache.zookeeper" level="ERROR">
+        <appender-ref ref="console"/>
+        <appender-ref ref="rolling"/>
+    </logger>
+
+    <!-- Suppress the irrelevant (wrong) warnings from the Netty channel handler -->
+    <logger name="org.apache.flink.shaded.akka.org.jboss.netty.channel.DefaultChannelPipeline" level="ERROR">
+        <appender-ref ref="console"/>
+        <appender-ref ref="rolling"/>
+    </logger>
+    
+</configuration>
