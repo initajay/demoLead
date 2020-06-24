@@ -19,7 +19,7 @@ public class Lead {
 	private long id;
 	private String first_name;
 	private String last_name;
-	private String mobile;
+	private int mobile;
 	private String email;
 	
     @Enumerated(EnumType.STRING)

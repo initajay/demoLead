@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 
 import com.example.demo.entities.Lead;
 import com.example.demo.entities.LeadRepository;
+import com.example.demo.entities.Location_type;
+import com.example.demo.entities.Status;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -86,6 +88,7 @@ public class DemoHelp {
 			if(lead.getEmail().equals( body.get("email").asText()) || lead.getMobile().equals(body.get("mobile").asText()) ) {
 				return false;
 			}
+			
 		}
 		return true;
 	}
@@ -97,6 +100,38 @@ public class DemoHelp {
 		} catch (NumberFormatException e) {
 			return false;
 		}
+	}
+	
+	
+	public Lead updateLead(Lead ld,ObjectNode inputbody) {
+		if(inputbody.has("first_name")) {
+			ld.setFirst_name(inputbody.get("first_name").asText() );
+		}
+		if(inputbody.has("last_name")) {
+			ld.setLast_name(inputbody.get("last_name").asText() );
+		}
+		if(inputbody.has("mobile")) {
+			ld.setMobile(inputbody.get("mobile").asText() );
+		}
+		if(inputbody.has("email")) {
+			ld.setEmail(inputbody.get("email").asText() );
+		}
+		if(inputbody.has("location_type")) {
+			Enum<?> ltyp = Enum.valueOf(Location_type.class, inputbody.get("location_type").asText() );
+			ld.setLocation_type((Location_type)ltyp);
+		}
+		if(inputbody.has("location_string")) {
+			ld.setLocation_string(inputbody.get("location_string").asText() );
+		}
+		if(inputbody.has("status")) {
+			Enum<?> status = Enum.valueOf(Status.class, inputbody.get("status").asText() );
+			ld.setStatus((Status)status);
+		}
+		if(inputbody.has("communication")) {
+			ld.setCommunication(inputbody.get("communication").asText() );
+		}
+		
+		return ld;
 	}
 
 }

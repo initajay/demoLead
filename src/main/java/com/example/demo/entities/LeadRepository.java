@@ -51,6 +51,26 @@ public class LeadRepository {
 		}
 		return false;
 	}
+	
+	public boolean isEmailExist(String email,long id) {
+		String sql = "select count(*) from lead where id!=? and email=?";
+		int count = jdbcTemplate.queryForObject(sql, new Object[] { id,email }, Integer.class);
+
+		if (count == 1) {
+			return true;
+		}
+		return false;
+	}
+	
+	public boolean isMobileExist(String mobile,long id) {
+		String sql = "select count(*) from lead where id!=? and mobile=?";
+		int count = jdbcTemplate.queryForObject(sql, new Object[] { id,mobile }, Integer.class);
+
+		if (count == 1) {
+			return true;
+		}
+		return false;
+	}
 
 	public int deleteById(long id) {
 		return jdbcTemplate.update("delete from lead where id=?", new Object[] { id });
