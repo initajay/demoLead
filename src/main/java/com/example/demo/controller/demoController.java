@@ -108,7 +108,7 @@ public class demoController {
 		}
 
 		if (repository.isEmailExist(inputBody.get("email").asText(), lead_id)
-				|| repository.isEmailExist(inputBody.get("mobile").asText(), lead_id)) {
+				|| repository.isMobileExist(inputBody.get("mobile").asText(), lead_id)) {
 			output.put("status", "failure");
 			output.put("reason", "duplicate");
 			return new ResponseEntity<>(output, HttpStatus.BAD_REQUEST);
@@ -124,7 +124,7 @@ public class demoController {
 
 	}
 
-	@DeleteMapping(value = "/api/leads/{lead_id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@DeleteMapping(value = "/api/leads"+"/{lead_id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> deleteLeads(@ApiParam(value = "lead_id", required = true) @PathVariable Long lead_id) {
 		ObjectNode output = mapper.createObjectNode();
 
@@ -140,7 +140,7 @@ public class demoController {
 
 	}
 
-	@PutMapping(value = " /api/mark_lead/{lead_id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(value = " /api/mark_lead"+ "/{lead_id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> markLeads(@RequestBody ObjectNode inputBody,
 			@ApiParam(value = "lead_id", required = true) @PathVariable Long lead_id)
 			throws JsonMappingException, JsonProcessingException {

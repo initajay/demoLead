@@ -3,7 +3,7 @@ create table lead
    id integer not null UNIQUE,
    first_name varchar(255) not null,
    last_name varchar(255) not null,
-   mobile varchar(255) not null UNIQUE,
+   mobile bigint not null UNIQUE,
    email varchar(255) not null UNIQUE,
    /*location_type ENUM('Country','City','Zip') not null,*/
    location_type varchar(8) not null UNIQUE,

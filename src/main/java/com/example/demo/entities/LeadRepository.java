@@ -21,7 +21,7 @@ public class LeadRepository {
 			lead.setId(rs.getLong("id"));
 			lead.setFirst_name(rs.getString("first_name"));
 			lead.setLast_name(rs.getString("last_name"));
-			lead.setMobile(rs.getString("mobile"));
+			lead.setMobile(rs.getLong("mobile"));
 			lead.setEmail(rs.getString("email"));
 			Enum<?> location_type = Enum.valueOf(Location_type.class, rs.getString("Location_type"));
 			lead.setLocation_type((Location_type) location_type);

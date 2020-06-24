@@ -85,7 +85,7 @@ public class DemoHelp {
 		}
 		
 		for (Lead lead : leads) {
-			if(lead.getEmail().equals( body.get("email").asText()) || lead.getMobile().equals(body.get("mobile").asText()) ) {
+			if(lead.getEmail().equals( body.get("email").asText()) || lead.getMobile().equals(body.get("mobile").asLong()) ) {
 				return false;
 			}
 			
@@ -111,7 +111,7 @@ public class DemoHelp {
 			ld.setLast_name(inputbody.get("last_name").asText() );
 		}
 		if(inputbody.has("mobile")) {
-			ld.setMobile(inputbody.get("mobile").asText() );
+			ld.setMobile(inputbody.get("mobile").asLong() );
 		}
 		if(inputbody.has("email")) {
 			ld.setEmail(inputbody.get("email").asText() );
