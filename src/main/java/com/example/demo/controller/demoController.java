@@ -140,14 +140,14 @@ public class demoController {
 
 	}
 
-	@PutMapping(value = " /api/mark_lead"+ "/{lead_id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(value = "/api/mark_lead"+ "/{lead_id}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> markLeads(@RequestBody ObjectNode inputBody,
 			@ApiParam(value = "lead_id", required = true) @PathVariable Long lead_id)
 			throws JsonMappingException, JsonProcessingException {
 		ObjectNode output = mapper.createObjectNode();
 
 		Lead ld = new Lead();
-		if (repository.isLeadExist(lead_id) || (inputBody.has("communication"))) {
+		if (repository.isLeadExist(lead_id) && (inputBody.has("communication"))) {
 			ld = repository.findById(lead_id);
 		} else {
 			output.put("status", "failure");
